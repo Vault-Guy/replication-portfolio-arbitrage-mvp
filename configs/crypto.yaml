@@ -1,7 +1,7 @@
 market: crypto  # идентификатор рынка
 
 # --- данные ---
-raw_archive: data/raw/crypto_data.zip  # путь к zip-архиву с CSV-файлами
+raw_archive: data/crypto_data.zip      # путь к zip-архиву с CSV-файлами
 archive_subdir: crypto_data            # подпапка внутри архива
 start: "2020-01-01"                    # начало исследуемого периода (включительно)
 end: "2026-01-01"                      # конец исследуемого периода (не включая)

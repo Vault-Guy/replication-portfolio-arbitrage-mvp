@@ -1,7 +1,7 @@
 market: russia  # идентификатор рынка
 
 # --- данные ---
-raw_archive: data/raw/russia_data.zip        # путь к zip-архиву с CSV-файлами
+raw_archive: data/russia_data.zip            # путь к zip-архиву с CSV-файлами
 archive_subdir: LKOH_and_partners_data       # подпапка внутри архива
 frequency: 1D                                # частота баров (торговые дни MOEX)
 price_column: close                          # колонка с ценой в каждом CSV
