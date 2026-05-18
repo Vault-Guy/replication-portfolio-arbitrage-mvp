@@ -14,7 +14,6 @@ class MarketConfig:
     market: str
     raw_archive: Path
     canonical_path: Path
-    loader: str
     settings: Mapping[str, Any]
 
     @property

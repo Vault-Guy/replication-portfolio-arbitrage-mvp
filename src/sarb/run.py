@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-import importlib
 from dataclasses import asdict, dataclass
 from typing import Any
 
 import pandas as pd
 
 from sarb.backtest import BacktestResult, run_spread_backtest
+from sarb.data.loader import load_prices as _load_prices
 from sarb.config import CONFIG_ROOT, load_market_config, load_yaml
 from sarb.pca_replication import PCAReplicationConfig
 from sarb.pipeline import PCAReplicationPipelineResult, run_pca_synthetic_etf_pipeline
@@ -80,8 +80,7 @@ def load_run_config(market: str) -> RunConfig:
 
 def load_market_prices(market: str) -> pd.DataFrame:
     market_config = load_market_config(market)
-    module = importlib.import_module(f"sarb.data.{market}_loader")
-    return module.load_prices(market_config).prices
+    return _load_prices(market_config).prices
 
 
 def coverage_summary(prices: pd.DataFrame) -> pd.DataFrame:

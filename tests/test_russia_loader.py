@@ -3,7 +3,7 @@ import pytest
 
 from sarb.config import load_market_config
 from sarb.data.base import validate_canonical_prices
-from sarb.data.russia_loader import ANNUALIZATION_FACTOR, load_prices
+from sarb.data.loader import load_prices
 
 
 @pytest.fixture(scope="module")
@@ -13,7 +13,7 @@ def russia_data():
 
 def test_russia_loader_metadata(russia_data):
     assert russia_data.metadata["frequency"] == "1D"
-    assert russia_data.metadata["annualization_factor"] == ANNUALIZATION_FACTOR
+    assert russia_data.metadata["annualization_factor"] == 252.0
     assert russia_data.metadata["symbol_count"] >= 2
 
 

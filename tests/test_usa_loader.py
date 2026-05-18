@@ -3,7 +3,7 @@ import pytest
 
 from sarb.config import load_market_config
 from sarb.data.base import validate_canonical_prices
-from sarb.data.usa_loader import ANNUALIZATION_FACTOR, load_prices
+from sarb.data.loader import load_prices
 
 
 @pytest.fixture(scope="module")
@@ -13,7 +13,7 @@ def usa_data():
 
 def test_usa_loader_metadata(usa_data):
     assert usa_data.metadata["frequency"] == "1D"
-    assert usa_data.metadata["annualization_factor"] == ANNUALIZATION_FACTOR
+    assert usa_data.metadata["annualization_factor"] == 252.0
     assert usa_data.metadata["symbol_count"] == 142
     assert "future-selection bias" in usa_data.metadata["universe_selection_bias"]
 

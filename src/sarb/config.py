@@ -32,6 +32,5 @@ def load_market_config(name: str) -> MarketConfig:
         market=payload["market"],
         raw_archive=_resolve_path(payload["raw_archive"], PROJECT_ROOT),
         canonical_path=PROJECT_ROOT / "data" / "canonical" / f"{name}_prices.parquet",
-        loader=f"sarb.data.{name}_loader",
         settings=payload,
     )
