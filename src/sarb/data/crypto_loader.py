@@ -55,7 +55,6 @@ def load_prices(config: MarketConfig) -> MarketData:
         "frequency": settings["frequency"],
         "annualization_factor": ANNUALIZATION_FACTOR,
         "price_field": price_column,
-        "adjusted": bool(settings.get("adjusted", False)),
         "allow_partial_histories": bool(settings.get("allow_partial_histories", True)),
         "missing_value_policy": missing_value_policy,
         "symbols": list(prices.columns),

@@ -8,7 +8,6 @@ price_column: close                          # колонка с ценой в �
 timestamp_column: time                       # колонка с датой/временем в каждом CSV
 symbol_prefix_strip: "RUS_"                  # префикс, удаляемый из имени файла при формировании тикера
 symbol_suffix_strip: ", 1D"                  # суффикс, удаляемый из имени файла при формировании тикера
-adjusted: false                              # цены не скорректированы (сырые данные TradingView)
 
 # --- стратегия ---
 annualization_factor: 252            # торговых дней в году (для аннуализации метрик)

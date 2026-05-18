@@ -51,7 +51,6 @@ def load_prices(config: MarketConfig) -> MarketData:
         "frequency": settings.get("frequency", "1D"),
         "annualization_factor": ANNUALIZATION_FACTOR,
         "price_field": price_column,
-        "adjusted": bool(settings.get("adjusted", False)),
         "symbols": list(prices.columns),
         "symbol_count": int(prices.shape[1]),
         "start": str(prices.index.min()),
