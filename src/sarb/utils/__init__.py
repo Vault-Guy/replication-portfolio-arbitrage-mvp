@@ -11,14 +11,12 @@ from sarb.utils.io import (
     validate_results_row_count,
 )
 from sarb.utils.time import bars_per_year, expected_annualization_factor
-from sarb.utils.validation import assert_no_future_rows
 
 __all__ = [
     "RAW_CSV_ENCODING",
     "RAW_CSV_SEPARATOR",
     "RAW_DECIMAL_SEPARATOR",
     "RESULT_METRIC_COLUMNS",
-    "assert_no_future_rows",
     "bars_per_year",
     "expected_annualization_factor",
     "format_dataframe_for_display_eu",
