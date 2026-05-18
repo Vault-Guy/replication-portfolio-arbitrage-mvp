@@ -1,21 +1,21 @@
-market: russia
+market: russia  # идентификатор рынка
 
-# --- data ---
-raw_archive: data/raw/russia_data.zip
-archive_subdir: LKOH_and_partners_data
-frequency: 1D
-price_column: close
-timestamp_column: time
-symbol_prefix_strip: "RUS_"
-symbol_suffix_strip: ", 1D"
-adjusted: false
+# --- данные ---
+raw_archive: data/raw/russia_data.zip        # путь к zip-архиву с CSV-файлами
+archive_subdir: LKOH_and_partners_data       # подпапка внутри архива
+frequency: 1D                                # частота баров (торговые дни MOEX)
+price_column: close                          # колонка с ценой в каждом CSV
+timestamp_column: time                       # колонка с датой/временем в каждом CSV
+symbol_prefix_strip: "RUS_"                  # префикс, удаляемый из имени файла при формировании тикера
+symbol_suffix_strip: ", 1D"                  # суффикс, удаляемый из имени файла при формировании тикера
+adjusted: false                              # цены не скорректированы (сырые данные TradingView)
 
-# --- strategy ---
-annualization_factor: 252
-train_window: 504
-rebalance_frequency: 21
-pca_explained_variance: 0.80
-zscore_lookback: 60
-entry_z: 2.0
-exit_z: 0.5
-transaction_cost_bps: 10
+# --- стратегия ---
+annualization_factor: 252            # торговых дней в году (для аннуализации метрик)
+train_window: 504                    # длина обучающего окна, баров (≈ 2 года)
+rebalance_frequency: 21              # частота ребалансировки, баров (≈ 1 месяц)
+pca_explained_variance: 0.80         # минимальная доля дисперсии, объясняемой PCA
+zscore_lookback: 60                  # окно для rolling mean/std в z-score, баров
+entry_z: 2.0                         # порог открытия позиции по z-score
+exit_z: 0.5                          # порог закрытия позиции по z-score
+transaction_cost_bps: 10             # транзакционные издержки в базисных пунктах (один конец)

@@ -1,23 +1,23 @@
-market: usa
+market: usa  # идентификатор рынка
 
-# --- data ---
-raw_archive: data/raw/usa_data.zip
-archive_subdir: usa_data
-start: "2016-01-01"
-end: "2026-01-01"
-frequency: 1D
-price_column: close
-timestamp_column: datetime
-adjusted: true
-dividends: true
-splits: true
+# --- данные ---
+raw_archive: data/raw/usa_data.zip   # путь к zip-архиву с CSV-файлами
+archive_subdir: usa_data             # подпапка внутри архива
+start: "2016-01-01"                  # начало исследуемого периода (включительно)
+end: "2026-01-01"                    # конец исследуемого периода (не включая)
+frequency: 1D                        # частота баров (торговые дни)
+price_column: close                  # колонка с ценой в каждом CSV
+timestamp_column: datetime           # колонка с датой/временем в каждом CSV
+adjusted: true                       # цены скорректированы на сплиты и дивиденды
+dividends: true                      # в корректировку включены дивиденды
+splits: true                         # в корректировку включены сплиты
 
-# --- strategy ---
-annualization_factor: 252
-train_window: 504
-rebalance_frequency: 21
-pca_explained_variance: 0.80
-zscore_lookback: 60
-entry_z: 2.0
-exit_z: 0.5
-transaction_cost_bps: 5
+# --- стратегия ---
+annualization_factor: 252            # торговых дней в году (для аннуализации метрик)
+train_window: 504                    # длина обучающего окна, баров (≈ 2 года)
+rebalance_frequency: 21              # частота ребалансировки, баров (≈ 1 месяц)
+pca_explained_variance: 0.80         # минимальная доля дисперсии, объясняемой PCA
+zscore_lookback: 60                  # окно для rolling mean/std в z-score, баров
+entry_z: 2.0                         # порог открытия позиции по z-score
+exit_z: 0.5                          # порог закрытия позиции по z-score
+transaction_cost_bps: 5              # транзакционные издержки в базисных пунктах (один конец)

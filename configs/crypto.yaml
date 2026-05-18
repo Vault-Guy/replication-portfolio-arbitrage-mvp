@@ -1,23 +1,23 @@
-market: crypto
+market: crypto  # идентификатор рынка
 
-# --- data ---
-raw_archive: data/raw/crypto_data.zip
-archive_subdir: crypto_data
-start: "2020-01-01"
-end: "2026-01-01"
-frequency: 1H
-price_column: close
-timestamp_column: datetime
-symbol_suffix_strip: USDT
-adjusted: false
-missing_value_policy: preserve
+# --- данные ---
+raw_archive: data/raw/crypto_data.zip  # путь к zip-архиву с CSV-файлами
+archive_subdir: crypto_data            # подпапка внутри архива
+start: "2020-01-01"                    # начало исследуемого периода (включительно)
+end: "2026-01-01"                      # конец исследуемого периода (не включая)
+frequency: 1H                          # частота баров (часовые свечи, 24/7)
+price_column: close                    # колонка с ценой в каждом CSV
+timestamp_column: datetime             # колонка с датой/временем в каждом CSV
+symbol_suffix_strip: USDT              # суффикс, удаляемый из имени файла при формировании тикера
+adjusted: false                        # цены не скорректированы (крипто не платит дивиденды)
+missing_value_policy: preserve         # пропуски оставляются как есть (активы листингуются в разное время)
 
-# --- strategy ---
-annualization_factor: 8760
-train_window: 2880
-rebalance_frequency: 168
-pca_explained_variance: 0.80
-zscore_lookback: 336
-entry_z: 2.0
-exit_z: 0.5
-transaction_cost_bps: 10
+# --- стратегия ---
+annualization_factor: 8760             # часов в году (24 * 365, для аннуализации метрик)
+train_window: 2880                     # длина обучающего окна, баров (≈ 120 дней)
+rebalance_frequency: 168               # частота ребалансировки, баров (≈ 1 неделя)
+pca_explained_variance: 0.80           # минимальная доля дисперсии, объясняемой PCA
+zscore_lookback: 336                   # окно для rolling mean/std в z-score, баров (≈ 14 дней)
+entry_z: 2.0                           # порог открытия позиции по z-score
+exit_z: 0.5                            # порог закрытия позиции по z-score
+transaction_cost_bps: 10               # транзакционные издержки в базисных пунктах (один конец)
