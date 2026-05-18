@@ -15,7 +15,6 @@ def test_usa_loader_metadata(usa_data):
     assert usa_data.metadata["frequency"] == "1D"
     assert usa_data.metadata["annualization_factor"] == 252.0
     assert usa_data.metadata["symbol_count"] == 142
-    assert "future-selection bias" in usa_data.metadata["universe_selection_bias"]
 
 
 def test_usa_loader_canonical_prices(usa_data):

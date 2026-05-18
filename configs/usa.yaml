@@ -3,7 +3,6 @@ market: usa  # идентификатор рынка
 # --- данные ---
 raw_archive: data/usa_data.zip       # путь к zip-архиву с CSV-файлами
 archive_subdir: usa_data             # подпапка внутри архива
-universe_selection_bias: "Universe is the union of S&P 500 names in the top-100 by market capitalisation in 2016 and 2026. Including 2026 membership can introduce future-selection bias in historical research."
 start: "2016-01-01"                  # начало исследуемого периода (включительно)
 end: "2026-01-01"                    # конец исследуемого периода (не включая)
 frequency: 1D                        # частота баров (торговые дни)

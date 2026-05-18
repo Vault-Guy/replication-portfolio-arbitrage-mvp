@@ -65,6 +65,4 @@ def load_prices(config: MarketConfig) -> MarketData:
             if prices[sym].first_valid_index() is not None
         },
     }
-    if "universe_selection_bias" in settings:
-        metadata["universe_selection_bias"] = settings["universe_selection_bias"]
     return MarketData(prices=prices, metadata=metadata)
