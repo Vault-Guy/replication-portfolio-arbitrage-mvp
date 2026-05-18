@@ -144,10 +144,8 @@ def test_late_listed_asset_pipeline_does_not_crash() -> None:
     prices = pd.DataFrame({"BTC": btc, "ETH": eth, "SOL": sol}, index=idx)
     base = RunConfig(
         market="crypto",
-        data_file="data/raw/crypto_data.zip",
         frequency="1H",
         annualization_factor=8760.0,
-        price_field="close",
         train_window=120,
         rebalance_frequency=24,
         pca_explained_variance=0.85,

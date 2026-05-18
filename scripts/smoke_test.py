@@ -11,6 +11,7 @@ if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
 import sarb  # noqa: E402
+from sarb.config import load_market_config  # noqa: E402
 from sarb.run import (  # noqa: E402
     RunConfig,
     UnifiedPipelineResult,
@@ -105,7 +106,7 @@ def run_market_smoke(
 ) -> UnifiedPipelineResult:
     print(f"\n=== {market.upper()} ===")
     run_config = load_run_config(market)
-    data_path = PROJECT_ROOT / run_config.data_file
+    data_path = load_market_config(market).raw_archive
     if not data_path.is_file():
         raise FileNotFoundError(f"missing raw archive: {data_path}")
 

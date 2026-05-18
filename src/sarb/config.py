@@ -5,7 +5,7 @@ from typing import Any
 
 import yaml
 
-from sarb.types import MarketConfig, StrategyConfig
+from sarb.types import MarketConfig
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 CONFIG_ROOT = PROJECT_ROOT / "configs"
@@ -27,16 +27,11 @@ def load_yaml(path: str | Path) -> dict[str, Any]:
 
 
 def load_market_config(name: str) -> MarketConfig:
-    payload = load_yaml(CONFIG_ROOT / "markets" / f"{name}.yaml")
+    payload = load_yaml(CONFIG_ROOT / f"{name}.yaml")
     return MarketConfig(
         market=payload["market"],
         raw_archive=_resolve_path(payload["raw_archive"], PROJECT_ROOT),
-        canonical_path=_resolve_path(payload["canonical_path"], PROJECT_ROOT),
-        loader=payload["loader"],
+        canonical_path=PROJECT_ROOT / "data" / "canonical" / f"{name}_prices.parquet",
+        loader=f"sarb.data.{name}_loader",
         settings=payload,
     )
-
-
-def load_strategy_config(name: str = "pca_default") -> StrategyConfig:
-    payload = load_yaml(CONFIG_ROOT / "strategy" / f"{name}.yaml")
-    return StrategyConfig(name=payload["strategy"], settings=payload)

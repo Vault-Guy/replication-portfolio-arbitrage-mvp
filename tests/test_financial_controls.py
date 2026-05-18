@@ -26,10 +26,8 @@ def test_run_config_rejects_mismatched_annualization():
         RunConfig.from_mapping(
             {
                 "market": "crypto",
-                "data_file": "data/raw/crypto_data.zip",
                 "frequency": "1H",
                 "annualization_factor": 252,
-                "price_field": "close",
                 "train_window": 100,
                 "rebalance_frequency": 10,
                 "pca_explained_variance": 0.8,
@@ -134,10 +132,8 @@ def test_run_unified_pipeline_rejects_target_in_universe():
     config = RunConfig.from_mapping(
         {
             "market": "usa",
-            "data_file": "data/raw/usa_data.zip",
             "frequency": "1D",
             "annualization_factor": 252,
-            "price_field": "adjusted_close",
             "train_window": 20,
             "rebalance_frequency": 5,
             "pca_explained_variance": 0.8,
@@ -165,10 +161,8 @@ def test_usa_pipeline_surfaces_universe_selection_caveat():
     config = RunConfig.from_mapping(
         {
             "market": "usa",
-            "data_file": "data/raw/usa_data.zip",
             "frequency": "1D",
             "annualization_factor": 252,
-            "price_field": "adjusted_close",
             "train_window": 20,
             "rebalance_frequency": 5,
             "pca_explained_variance": 0.8,

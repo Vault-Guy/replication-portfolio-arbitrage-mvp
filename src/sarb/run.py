@@ -26,10 +26,8 @@ CRYPTO_CALENDAR_CAVEAT = (
 @dataclass(frozen=True)
 class RunConfig:
     market: str
-    data_file: str
     frequency: str
     annualization_factor: float
-    price_field: str
     train_window: int
     rebalance_frequency: int
     pca_explained_variance: float
@@ -37,17 +35,13 @@ class RunConfig:
     entry_z: float
     exit_z: float
     transaction_cost_bps: float
-    start_date: str | None = None
-    end_date: str | None = None
 
     @classmethod
     def from_mapping(cls, payload: dict[str, Any]) -> RunConfig:
         config = cls(
             market=payload["market"],
-            data_file=payload["data_file"],
             frequency=payload["frequency"],
             annualization_factor=float(payload["annualization_factor"]),
-            price_field=payload["price_field"],
             train_window=int(payload["train_window"]),
             rebalance_frequency=int(payload["rebalance_frequency"]),
             pca_explained_variance=float(payload["pca_explained_variance"]),
@@ -55,8 +49,6 @@ class RunConfig:
             entry_z=float(payload["entry_z"]),
             exit_z=float(payload["exit_z"]),
             transaction_cost_bps=float(payload["transaction_cost_bps"]),
-            start_date=payload.get("start_date"),
-            end_date=payload.get("end_date"),
         )
         config.validate()
         return config
