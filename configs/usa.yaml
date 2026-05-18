@@ -1,0 +1,43 @@
+# US equities PCA stat-arb market configuration.
+
+# Market identifier used by loaders and the shared research pipeline.
+market: usa
+
+# Path to the raw per-ticker CSV archive (dividend- and split-adjusted closes).
+data_file: data/raw/usa_data.zip
+
+# Inclusive start of the research sample; bars before this date are dropped.
+start_date: "2016-01-01"
+
+# Exclusive end of the research sample; bars on or after this date are dropped.
+end_date: "2026-01-01"
+
+# Bar spacing for returns and signal generation (US equity session days).
+frequency: 1D
+
+# Trading periods per year for scaling volatilities and OU parameters to annual units.
+annualization_factor: 252
+
+# Price series used for returns; adjusted_close denotes split- and dividend-adjusted closes.
+price_field: adjusted_close
+
+# Rolling history length (trading days) for fitting PCA factors and related estimators.
+train_window: 504
+
+# Refit cadence (trading days) for factor loadings and portfolio weights.
+rebalance_frequency: 21
+
+# Minimum share of cross-sectional return variance PCA factors must explain.
+pca_explained_variance: 0.80
+
+# Rolling window (trading days) for residual mean and volatility in z-score signals.
+zscore_lookback: 60
+
+# Absolute z-score threshold for opening a mean-reversion position.
+entry_z: 2.0
+
+# Absolute z-score threshold for closing a position back toward fair value.
+exit_z: 0.5
+
+# One-way transaction cost in basis points applied on turnover.
+transaction_cost_bps: 5

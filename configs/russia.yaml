@@ -1,0 +1,37 @@
+# Russian equities PCA stat-arb market configuration.
+
+# Market identifier used by loaders and the shared research pipeline.
+market: russia
+
+# Path to the raw archive; schema mapping is finalized separately in the Russia loader.
+data_file: data/raw/russia_data.zip
+
+# Bar spacing for returns and signal generation (Moscow exchange session days).
+frequency: 1D
+
+# Trading periods per year for scaling volatilities and OU parameters to annual units.
+annualization_factor: 252
+
+# Price series used for returns; adjusted_close denotes split- and dividend-adjusted closes when available.
+price_field: adjusted_close
+
+# Rolling history length (trading days) for fitting PCA factors and related estimators.
+train_window: 504
+
+# Refit cadence (trading days) for factor loadings and portfolio weights.
+rebalance_frequency: 21
+
+# Minimum share of cross-sectional return variance PCA factors must explain.
+pca_explained_variance: 0.80
+
+# Rolling window (trading days) for residual mean and volatility in z-score signals.
+zscore_lookback: 60
+
+# Absolute z-score threshold for opening a mean-reversion position.
+entry_z: 2.0
+
+# Absolute z-score threshold for closing a position back toward fair value.
+exit_z: 0.5
+
+# One-way transaction cost in basis points applied on turnover.
+transaction_cost_bps: 10

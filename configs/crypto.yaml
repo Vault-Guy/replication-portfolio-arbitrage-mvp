@@ -1,0 +1,43 @@
+# Crypto PCA stat-arb market configuration.
+
+# Market identifier used by loaders and the shared research pipeline.
+market: crypto
+
+# Path to the raw hourly close archive (one CSV per USDT pair).
+data_file: data/raw/crypto_data.zip
+
+# Inclusive start of the research sample; assets may list later without back-filling.
+start_date: "2020-01-01"
+
+# Exclusive end of the research sample; bars on or after this date are dropped.
+end_date: "2026-01-01"
+
+# Bar spacing for returns and signal generation (hourly bars).
+frequency: 1H
+
+# Trading periods per year for scaling volatilities and OU parameters to annual units (24 * 365).
+annualization_factor: 8760
+
+# Price series used for returns (unadjusted hourly closes).
+price_field: close
+
+# Rolling history length (hours) for fitting PCA factors; 120 days of hourly data.
+train_window: 2880
+
+# Refit cadence (hours) for factor loadings and portfolio weights; one calendar week.
+rebalance_frequency: 168
+
+# Minimum share of cross-sectional return variance PCA factors must explain.
+pca_explained_variance: 0.80
+
+# Rolling window (hours) for residual mean and volatility in z-score signals; 14 days.
+zscore_lookback: 336
+
+# Absolute z-score threshold for opening a mean-reversion position.
+entry_z: 2.0
+
+# Absolute z-score threshold for closing a position back toward fair value.
+exit_z: 0.5
+
+# One-way transaction cost in basis points applied on turnover.
+transaction_cost_bps: 10

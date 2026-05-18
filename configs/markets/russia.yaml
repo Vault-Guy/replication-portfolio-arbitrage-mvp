@@ -1,0 +1,20 @@
+market: russia
+raw_archive: data/raw/russia_data.zip
+archive_subdir: LKOH_and_partners_data
+canonical_path: data/canonical/russia_prices.parquet
+
+price_column: close
+timestamp_column: time
+symbol_from_filename: true
+symbol_prefix_strip: "RUS_"
+symbol_suffix_strip: ", 1D"
+
+adjusted: false
+dividends: false
+splits: false
+
+universe:
+  description: "LKOH and partner names from TradingView export"
+  expected_count: null
+
+loader: sarb.data.russia_loader:load_prices
