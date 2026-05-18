@@ -50,8 +50,6 @@ def load_prices(config: MarketConfig) -> MarketData:
         "frequency": settings["frequency"],
         "annualization_factor": ANNUALIZATION_FACTOR,
         "price_field": price_column,
-        "dividends": bool(settings.get("dividends", True)),
-        "splits": bool(settings.get("splits", True)),
         "symbols": list(prices.columns),
         "symbol_count": int(prices.shape[1]),
         "start": str(prices.index.min()),
