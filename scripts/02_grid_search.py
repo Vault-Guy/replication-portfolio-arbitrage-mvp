@@ -44,9 +44,9 @@ BEST_BY_MARKET_PATH = OUTPUT_DIR / "best_by_market.csv"
 BEST_BY_TARGET_PATH = OUTPUT_DIR / "best_by_target.csv"
 
 MARKET_TARGETS: dict[str, list[str]] = {
-    "usa": ["AAPL", "BRK.B", "MSFT", "AMZN", "NVDA"],
-    "crypto": ["BTC", "ETH", "SOL", "XRP", "BNB"],
-    "russia": ["AFKS", "AFLT", "LKOH", "CHMF", "GAZP"],
+    "usa": ["AAPL", "BRK.B", "MSFT", "AMZN", "NVDA", "XOM", "JNJ", "JPM", "KO", "CAT"],
+    "crypto": ["BTC", "ETH", "SOL", "XRP", "BNB", "LINK", "ADA", "AVAX", "DOGE", "ATOM"],
+    "russia": ["AFKS", "AFLT", "LKOH", "CHMF", "GAZP", "SBER", "NVTK", "YDEX", "PLZL", "MOEX"],
 }
 
 TRAIN_WINDOWS: dict[str, int] = {
