@@ -9,7 +9,7 @@ import pytest
 
 from sarb.run import coverage_summary
 from sarb.utils.io import load_results_table
-from sarb.universe import (
+from sarb.core.universe import (
     CRYPTO_EXCLUDED_TOKENS,
     CRYPTO_PRIORITY_UNIVERSE,
     USA_PRIORITY_UNIVERSE,

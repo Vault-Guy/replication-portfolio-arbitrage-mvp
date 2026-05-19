@@ -34,7 +34,7 @@ from sarb.run import (  # noqa: E402
     load_run_config,
     run_unified_pipeline,
 )
-from sarb.universe import UniverseSelectionResult, select_priority_universe  # noqa: E402
+from sarb.core.universe import UniverseSelectionResult, select_priority_universe  # noqa: E402
 from sarb.utils.io import format_dataframe_for_display_eu, save_table  # noqa: E402
 
 OUTPUT_DIR = PROJECT_ROOT / "results" / "grid_search"

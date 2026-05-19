@@ -3,7 +3,7 @@ import pandas as pd
 import pytest
 
 from sarb.data.base import apply_missing_value_policy
-from sarb.pca_replication import (
+from sarb.pca.model import (
     PCAReplicationConfig,
     fit_pca_synthetic_etf,
     replicate_segment,
@@ -11,7 +11,7 @@ from sarb.pca_replication import (
     universe_eligible_for_window,
 )
 from sarb.run import RunConfig, load_run_config, point_in_time_universe, run_unified_pipeline
-from sarb.signals import shift_positions_for_execution
+from sarb.strategy.signals import shift_positions_for_execution
 
 
 def test_run_config_annualization_matches_market_calendar():

@@ -5,13 +5,13 @@ from typing import Any
 
 import pandas as pd
 
-from sarb.backtest import BacktestResult, run_spread_backtest
+from sarb.strategy.backtest import BacktestResult, run_spread_backtest
 from sarb.data.loader import load_prices as _load_prices
-from sarb.config import CONFIG_ROOT, load_market_config, load_yaml
-from sarb.pca_replication import PCAReplicationConfig
-from sarb.pipeline import PCAReplicationPipelineResult, run_pca_synthetic_etf_pipeline
-from sarb.signals import SignalConfig
-from sarb.universe import normalize_ticker_for_comparison
+from sarb.core.config import CONFIG_ROOT, load_market_config, load_yaml
+from sarb.pca.model import PCAReplicationConfig
+from sarb.pca.pipeline import PCAReplicationPipelineResult, run_pca_synthetic_etf_pipeline
+from sarb.strategy.signals import SignalConfig
+from sarb.core.universe import normalize_ticker_for_comparison
 from sarb.utils.time import expected_annualization_factor
 
 USA_UNIVERSE_SELECTION_BIAS = (

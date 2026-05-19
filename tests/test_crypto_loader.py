@@ -2,7 +2,7 @@ import pandas as pd
 import pytest
 from dataclasses import replace
 
-from sarb.config import load_market_config
+from sarb.core.config import load_market_config
 from sarb.data.base import validate_canonical_prices
 from sarb.data.loader import load_prices
 

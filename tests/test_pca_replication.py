@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from sarb.pca_replication import (
+from sarb.pca.model import (
     PCAReplicationConfig,
     _oos_frame,
     apply_pca_synthetic_etf,
@@ -11,7 +11,7 @@ from sarb.pca_replication import (
     select_component_count,
     to_log_prices,
 )
-from sarb.pipeline import run_pca_synthetic_etf_pipeline
+from sarb.pca.pipeline import run_pca_synthetic_etf_pipeline
 
 
 def _synthetic_prices(rows: int = 400, assets: int = 5, seed: int = 0) -> pd.DataFrame:

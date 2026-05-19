@@ -2,10 +2,10 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from sarb.backtest import run_spread_backtest
-from sarb.metrics import compute_performance_metrics
-from sarb.signals import SignalConfig, generate_positions, shift_positions_for_execution
-from sarb.spread import compute_spread, rolling_zscore
+from sarb.strategy.backtest import run_spread_backtest
+from sarb.strategy.metrics import compute_performance_metrics
+from sarb.strategy.signals import SignalConfig, generate_positions, shift_positions_for_execution
+from sarb.strategy.spread import compute_spread, rolling_zscore
 
 
 def _config(**overrides) -> SignalConfig:

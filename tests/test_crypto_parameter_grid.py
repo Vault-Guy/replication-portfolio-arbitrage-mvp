@@ -8,11 +8,11 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from sarb.pca_replication import PCAReplicationConfig, replicate_segment, to_log_prices
-from sarb.pipeline import iter_rebalance_starts
+from sarb.pca.model import PCAReplicationConfig, replicate_segment, to_log_prices
+from sarb.pca.pipeline import iter_rebalance_starts
 from sarb.run import RunConfig, run_unified_pipeline
-from sarb.signals import generate_positions
-from sarb.universe import (
+from sarb.strategy.signals import generate_positions
+from sarb.core.universe import (
     CRYPTO_EXCLUDED_TOKENS,
     normalize_ticker_for_comparison,
     select_crypto_coverage_universe,

@@ -21,7 +21,7 @@ if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
 import sarb  # noqa: E402
-from sarb.config import load_market_config  # noqa: E402
+from sarb.core.config import load_market_config  # noqa: E402
 from sarb.run import (  # noqa: E402
     RunConfig,
     UnifiedPipelineResult,

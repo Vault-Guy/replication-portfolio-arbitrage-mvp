@@ -40,7 +40,7 @@ from sarb.run import (  # noqa: E402
     load_run_config,
     run_unified_pipeline,
 )
-from sarb.universe import (  # noqa: E402
+from sarb.core.universe import (  # noqa: E402
     UniverseSelectionResult,
     normalize_ticker_for_comparison,
     select_crypto_coverage_universe,
