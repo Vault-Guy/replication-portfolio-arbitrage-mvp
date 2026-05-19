@@ -62,7 +62,7 @@ REBALANCE_FREQUENCIES: dict[str, list[int]] = {
 }
 
 ENTRY_Z_VALUES = [1.0, 1.5, 2.0, 2.5, 3.0]
-EXIT_Z_VALUES = [0.0, 0.25, 0.5, 0.75, 1.0]
+EXIT_Z_VALUES = [0.25, 0.5, 0.75, 1.0]  # 0.0 excluded: never closes positions
 UNIVERSE_SIZE_REQUESTED = 30
 
 RESULT_COLUMNS = [

@@ -35,16 +35,21 @@ def count_trades(execution_positions: pd.Series) -> int:
 
 
 def average_holding_period(execution_positions: pd.Series) -> float:
-    active = execution_positions.fillna(0.0) != 0.0
-    if not active.any():
+    pos = execution_positions.fillna(0.0)
+    if (pos != 0.0).sum() == 0:
         return 0.0
 
-    groups = (active != active.shift(fill_value=False)).cumsum()
-    run_lengths = active.groupby(groups).sum()
-    holding_lengths = run_lengths[run_lengths > 0]
-    if holding_lengths.empty:
+    # Group by consecutive runs of the same non-zero direction (+1 or -1).
+    # A flip from +1 to -1 counts as a new holding period, not a continuation.
+    groups = (pos != pos.shift(fill_value=0.0)).cumsum()
+    individual_lengths = (
+        pos[pos != 0.0]
+        .groupby(groups[pos != 0.0])
+        .count()
+    )
+    if individual_lengths.empty:
         return 0.0
-    return float(holding_lengths.mean())
+    return float(individual_lengths.mean())
 
 
 def hit_rate(strategy_returns: pd.Series, execution_positions: pd.Series) -> float:

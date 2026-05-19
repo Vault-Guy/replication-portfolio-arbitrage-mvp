@@ -29,6 +29,12 @@ def generate_positions(
     """
     if entry_z <= 0 or exit_z < 0:
         raise ValueError("entry_z must be positive and exit_z must be non-negative")
+    if exit_z == 0.0:
+        raise ValueError(
+            "exit_z=0.0 is not supported: abs(value) < 0.0 is always False, so the "
+            "position never exits. Use exit_z > 0 (e.g. 0.25) for partial mean-reversion "
+            "exit, or remove exit_z=0.0 from the grid search parameter list."
+        )
     if exit_z > entry_z:
         raise ValueError("exit_z must not exceed entry_z")
 
