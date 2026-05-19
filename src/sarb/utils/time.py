@@ -1,15 +1,12 @@
 from __future__ import annotations
 
-
-def bars_per_year(frequency: str) -> float:
-    mapping = {
-        "1D": 252.0,
-        "1H": 24.0 * 365.0,
-    }
-    if frequency not in mapping:
-        raise ValueError(f"unsupported frequency: {frequency}")
-    return mapping[frequency]
+_ANNUALIZATION_FACTORS = {
+    "1D": 252.0,
+    "1H": 24.0 * 365.0,
+}
 
 
 def expected_annualization_factor(frequency: str) -> float:
-    return bars_per_year(frequency)
+    if frequency not in _ANNUALIZATION_FACTORS:
+        raise ValueError(f"unsupported frequency: {frequency}")
+    return _ANNUALIZATION_FACTORS[frequency]

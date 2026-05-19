@@ -1,14 +1,27 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 
 import yaml
 
-from sarb.types import MarketConfig
-
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 CONFIG_ROOT = PROJECT_ROOT / "configs"
+
+
+@dataclass(frozen=True)
+class MarketConfig:
+    """Market-specific settings loaded from YAML."""
+
+    market: str
+    raw_archive: Path
+    canonical_path: Path
+    settings: Mapping[str, Any]
+
+    @property
+    def frequency(self) -> str:
+        return str(self.settings.get("frequency", "1D"))
 
 
 def _resolve_path(value: str | Path, base: Path) -> Path:

@@ -14,7 +14,7 @@ from sarb.data.base import (
     read_long_csv,
     symbol_from_member,
 )
-from sarb.types import MarketConfig
+from sarb.config import MarketConfig
 
 
 def load_prices(config: MarketConfig) -> MarketData:
