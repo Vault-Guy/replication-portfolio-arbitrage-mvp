@@ -9,6 +9,8 @@
 ```
 replication-portfolio-arbitrage-mvp/
 │
+├── COMMANDS.md           # шпаргалка по командам запуска (полный цикл и по шагам)
+│
 ├── configs/
 │   ├── usa.yaml          # параметры рынка USA (данные + стратегия)
 │   ├── crypto.yaml       # параметры рынка Crypto
@@ -17,13 +19,17 @@ replication-portfolio-arbitrage-mvp/
 ├── data/
 │   ├── usa_data.zip      # дневные adj. close 142 акций США, 2016–2026
 │   ├── crypto_data.zip   # почасовые OHLCV 40+ криптовалют, 2020–2026
-│   └── russia_data.zip   # дневные цены ~20 акций РФ (TradingView)
+│   └── russia_data.zip   # дневные цены ~26 акций РФ (TradingView)
 │
 ├── scripts/
-│   ├── 01_smoke_test.py          # быстрая проверка пайплайна на всех рынках
-│   ├── 02_grid_search.py         # перебор параметров (основной инструмент)
-│   ├── 03_analyze_grid_search.py # постобработка результатов гридсёрча
-│   └── 04_export_results_eu.py   # конвертация CSV в EU-формат для Excel
+│   ├── 01_smoke_test.py              # быстрая проверка пайплайна на всех рынках
+│   ├── 02_grid_search.py             # перебор параметров (основной инструмент)
+│   ├── 03_analyze_grid_search.py     # постобработка результатов гридсёрча
+│   ├── 04_export_results_eu.py       # конвертация CSV в EU-формат для Excel
+│   ├── analyze_parameter_ranges.py   # детальный анализ частот параметров (топ-5/10/20%)
+│   ├── crypto_parameter_grid.py      # стейджированный грид для крипто с расш. параметрами
+│   ├── analyze_crypto_parameter_grid.py  # анализ результатов crypto_parameter_grid
+│   └── inspect_zip.py                # утилита для инспекции ZIP-архивов с данными
 │
 ├── src/sarb/                     # основной пакет (pip install -e ".[dev]")
 │   ├── run.py                    # единый оркестратор run_unified_pipeline()
@@ -38,6 +44,7 @@ replication-portfolio-arbitrage-mvp/
 │   │   ├── model.py              # fit/apply PCA-репликации (StandardScaler + PCA + OLS/Ridge)
 │   │   └── pipeline.py           # walk-forward цикл по rebalance-окнам
 │   ├── strategy/
+│   │   ├── HOW_BACKTEST_WORKS.md # описание логики бэктеста (каузальность, сдвиги, издержки)
 │   │   ├── spread.py             # вычисление спреда и каузального rolling z-score
 │   │   ├── signals.py            # генерация позиций с гистерезисом
 │   │   ├── backtest.py           # P&L, транзакционные издержки, equity curve
@@ -54,12 +61,12 @@ replication-portfolio-arbitrage-mvp/
 │   ├── 04_run_usa_pipeline.ipynb
 │   ├── 05_run_crypto_pipeline.ipynb
 │   ├── 06_run_russia_pipeline.ipynb
-│   └── 07_compare_markets.ipynb
+│   ├── 07_compare_markets.ipynb
+│   └── 08_portfolio_growth_report.ipynb  ← ОСНОВНОЙ НОУТБУК АНАЛИТИКИ (см. ниже)
 │
 ├── results/
 │   ├── grid_search/              # результаты гридсёрча по всем рынкам
 │   ├── grid_search_eu/           # то же в EU-формате (для Excel)
-│   ├── crypto_parameter_grid/    # расширенный грид только по крипте
 │   └── parameter_analysis/       # аналитика поверх grid_search_results.csv
 │
 ├── tests/                        # тесты (pytest)
@@ -114,9 +121,27 @@ python scripts/02_grid_search.py --market crypto --max-runs 5  # тест
 ### Анализ и экспорт
 
 ```bash
-python scripts/03_analyze_grid_search.py   # сводные таблицы и топ-параметры
-python scripts/04_export_results_eu.py     # EU-формат для Excel
+python scripts/03_analyze_grid_search.py       # сводные таблицы и топ-параметры
+python scripts/analyze_parameter_ranges.py     # частотный анализ параметров (топ-5/10/20%)
+python scripts/04_export_results_eu.py         # EU-формат для Excel
 ```
+
+### Полный цикл (с нуля)
+
+Полная последовательность команд описана в [COMMANDS.md](COMMANDS.md).
+
+### Визуализация результатов
+
+Основной ноутбук для построения аналитики по итогам расчётов:
+
+```
+notebooks/08_portfolio_growth_report.ipynb
+```
+
+Читает `results/grid_search/best_by_target.csv`, перезапускает пайплайн с лучшими параметрами и строит:
+- кривые роста портфеля (стартовый капитал $10 000) по каждому таргету на каждом рынке;
+- сводные таблицы метрик: финальный капитал, общий прирост, Buy & Hold, Sharpe, MDD, % прибыльных сделок;
+- сравнительный график лучшего таргета с каждого рынка (США / Россия / Крипто).
 
 ### Тесты
 
@@ -144,16 +169,6 @@ pytest tests/ -v
 
 Метрики на каждый прогон: `total_return`, `annualized_return`, `annualized_volatility`, `sharpe_ratio`, `max_drawdown`, `turnover`, `number_of_trades`, `average_holding_period`, `hit_rate`.
 
-### `results/crypto_parameter_grid/`
-
-Расширенный грид только по криптовалютам с дополнительными параметрами: `stop_loss_z`, `max_holding_period`, `regression_type` (OLS/Ridge), `ridge_alpha`, `min_asset_coverage`. Каждый прогон имеет `fingerprint` (JSON-хэш параметров) и `stage` (`core`/другие).
-
-| Файл | Содержимое |
-|------|-----------|
-| `crypto_parameter_grid_results.csv` | Полные сырые результаты |
-| `core_results.csv` | Только прогоны со `stage=core` |
-| `partial_results.csv` | Промежуточный чекпоинт долгого прогона |
-
 ### `results/parameter_analysis/`
 
 Вторичная аналитика поверх `grid_search_results.csv` для выбора устойчивых параметров.
@@ -163,6 +178,10 @@ pytest tests/ -v
 | `median_performance_by_entry_z.csv` / `_exit_z` / `_rebalance` | Медианные метрики по одному параметру |
 | `median_performance_by_entry_exit_pair.csv` | Медианные метрики по паре `entry_z\|exit_z` |
 | `median_performance_by_full_param_combo.csv` | Медианные метрики по тройке `rebalance\|entry_z\|exit_z` |
-| `top10_parameter_frequencies_*.csv` | Частота каждого значения параметра среди top-10% по Sharpe (глобально / по рынкам / по таргетам) |
-| `robust_parameter_combos.csv` | Комбинации, хорошо работающие одновременно по нескольким таргетам и рынкам |
+| `top10_parameter_frequencies_global.csv` | Частота параметров среди top-10% по Sharpe (глобально) |
+| `top10_parameter_frequencies_by_market.csv` | То же, разбивка по рынкам |
+| `top10_parameter_frequencies_by_target.csv` | То же, разбивка по таргетам |
+| `parameter_frequencies_all_top_groups_*.csv` | Частоты для топ-5/10/20% (глобально / по рынкам / по таргетам) |
+| `robust_parameter_combos.csv` | Комбинации, хорошо работающие по нескольким таргетам и рынкам одновременно |
 | `suspicious_top_results.csv` | Результаты из топа с флагами аномалий (`high_turnover`, `deep_drawdown`) |
+| `parameter_analysis_report.md` | Текстовый отчёт с выводами по анализу параметров |
