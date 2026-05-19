@@ -62,7 +62,8 @@ replication-portfolio-arbitrage-mvp/
 │   ├── 05_run_crypto_pipeline.ipynb
 │   ├── 06_run_russia_pipeline.ipynb
 │   ├── 07_compare_markets.ipynb
-│   └── 08_portfolio_growth_report.ipynb  ← ОСНОВНОЙ НОУТБУК АНАЛИТИКИ (см. ниже)
+│   ├── 08_portfolio_growth_report.ipynb  ← ОСНОВНОЙ НОУТБУК АНАЛИТИКИ (см. ниже)
+│   └── 09_replication_quality_analysis.ipynb  ← анализ качества репликации и half-life
 │
 ├── results/
 │   ├── grid_search/              # результаты гридсёрча по всем рынкам
@@ -119,6 +120,12 @@ python scripts/01_smoke_test.py
 - кривые роста портфеля (стартовый капитал $10 000) по каждому таргету на каждом рынке;
 - сводные таблицы метрик: финальный капитал, общий прирост, Buy & Hold, Sharpe, MDD, % прибыльных сделок;
 - сравнительный график лучшего таргета с каждого рынка (США / Россия / Крипто).
+
+Ноутбук `notebooks/09_replication_quality_analysis.ipynb` — углублённый анализ качества репликации и стационарности спреда:
+- **Z-Score Heatmaps** — тепловые карты коэффициента Шарпа в пространстве `entry_z × exit_z` (агрегированные по рынку и отдельные по таргетам);
+- **Качество репликации** — R², корреляция Пирсона, Tracking Error, PCA Explained Variance и скользящая корреляция доходностей (окно 63 дня);
+- **Half-Life спреда** — скорость возврата к среднему по модели Орнштейна-Уленбека (ОУ-регрессия) + ADF-тест стационарности;
+- **Сводный дашборд** — scatter-plot «Sharpe vs Half-Life vs R²» по всем таргетам и рынкам одновременно.
 
 ### Тесты
 
