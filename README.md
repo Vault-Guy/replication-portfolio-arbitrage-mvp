@@ -57,7 +57,10 @@ replication-portfolio-arbitrage-mvp/
 │   └── 07_compare_markets.ipynb
 │
 ├── results/
-│   └── grid_search/              # результаты гридсёрча (CSV)
+│   ├── grid_search/              # результаты гридсёрча по всем рынкам
+│   ├── grid_search_eu/           # то же в EU-формате (для Excel)
+│   ├── crypto_parameter_grid/    # расширенный грид только по крипте
+│   └── parameter_analysis/       # аналитика поверх grid_search_results.csv
 │
 ├── tests/                        # тесты (pytest)
 └── pyproject.toml
@@ -123,23 +126,43 @@ pytest tests/ -v
 
 ---
 
-## Результаты гридсёрча
+## Результаты
+
+### `results/grid_search/` и `results/grid_search_eu/`
+
+Идентичная структура; EU-версия использует разделитель `;` и BOM для совместимости с Excel.
 
 | Файл | Содержимое |
 |------|-----------|
-| `results/grid_search/grid_search_results.csv` | Все успешные прогоны: параметры + метрики |
-| `results/grid_search/grid_search_failures.csv` | Упавшие прогоны с трассировкой |
-| `results/grid_search/best_by_market.csv` | Лучший Sharpe по каждому рынку |
-| `results/grid_search/best_by_target.csv` | Лучший Sharpe по паре (рынок, цель) |
-| `results/grid_search_eu/*.csv` | Те же файлы в EU-формате (`;`, BOM) |
+| `grid_search_results.csv` | Все успешные прогоны: параметры + метрики (1 строка = 1 комбинация) |
+| `grid_search_failures.csv` | Упавшие прогоны с трассировкой ошибки |
+| `best_by_market.csv` | Лучший Sharpe по каждому рынку + флаги подозрительных результатов (`flag_few_trades`, `flag_large_drawdown`) + агрегаты (`median_sharpe`, `positive_sharpe_share`) |
+| `best_by_target.csv` | Лучший Sharpe по каждой паре `(market, target)` |
+| `summary_by_market.csv` | Агрегаты по рынку: `median_sharpe`, `best_sharpe`, `positive_sharpe_share` |
+| `summary_by_target.csv` | Агрегаты по паре `(market, target)` |
+| `top_robust_params.csv` | Параметры, чаще всего попадающие в топ-дециль по Sharpe: `top_decile_appearances`, `appearance_rate` |
 
 Метрики на каждый прогон: `total_return`, `annualized_return`, `annualized_volatility`, `sharpe_ratio`, `max_drawdown`, `turnover`, `number_of_trades`, `average_holding_period`, `hit_rate`.
 
----
+### `results/crypto_parameter_grid/`
 
-## Известные ограничения
+Расширенный грид только по криптовалютам с дополнительными параметрами: `stop_loss_z`, `max_holding_period`, `regression_type` (OLS/Ridge), `ridge_alpha`, `min_asset_coverage`. Каждый прогон имеет `fingerprint` (JSON-хэш параметров) и `stage` (`core`/другие).
 
-- **Survivorship bias (USA):** вселенная содержит тикеры топ-100 по состоянию на 2026 год — результаты по USA завышены.
-- **Sharpe без безрисковой ставки:** `sharpe = annualized_return / annualized_volatility`, ставка не вычитается.
-- **Нет holdout-выборки:** оптимальные параметры выбираются по тем же данным, на которых обучается модель.
-- **Стационарность спреда не проверяется:** тест ADF/KPSS не реализован.
+| Файл | Содержимое |
+|------|-----------|
+| `crypto_parameter_grid_results.csv` | Полные сырые результаты |
+| `core_results.csv` | Только прогоны со `stage=core` |
+| `partial_results.csv` | Промежуточный чекпоинт долгого прогона |
+
+### `results/parameter_analysis/`
+
+Вторичная аналитика поверх `grid_search_results.csv` для выбора устойчивых параметров.
+
+| Файл | Содержимое |
+|------|-----------|
+| `median_performance_by_entry_z.csv` / `_exit_z` / `_rebalance` | Медианные метрики по одному параметру |
+| `median_performance_by_entry_exit_pair.csv` | Медианные метрики по паре `entry_z\|exit_z` |
+| `median_performance_by_full_param_combo.csv` | Медианные метрики по тройке `rebalance\|entry_z\|exit_z` |
+| `top10_parameter_frequencies_*.csv` | Частота каждого значения параметра среди top-10% по Sharpe (глобально / по рынкам / по таргетам) |
+| `robust_parameter_combos.csv` | Комбинации, хорошо работающие одновременно по нескольким таргетам и рынкам |
+| `suspicious_top_results.csv` | Результаты из топа с флагами аномалий (`high_turnover`, `deep_drawdown`) |
