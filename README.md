@@ -63,7 +63,7 @@ replication-portfolio-arbitrage-mvp/
 │   ├── 06_run_russia_pipeline.ipynb
 │   ├── 07_compare_markets.ipynb
 │   ├── 08_portfolio_growth_report.ipynb  ← ОСНОВНОЙ НОУТБУК АНАЛИТИКИ (см. ниже)
-│   └── 09_replication_quality_analysis.ipynb  ← анализ качества репликации и half-life
+│   └── 09_replication_quality_analysis.ipynb  ← АНАЛИТИКА КАЧЕСТВА РЕПЛИКАЦИИ (см. ниже)
 │
 ├── results/
 │   ├── grid_search/              # результаты гридсёрча по всем рынкам
