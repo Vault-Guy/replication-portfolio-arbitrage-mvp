@@ -1,3 +1,16 @@
+"""
+Анализ результатов грид-сёрча: сводки, лучшие параметры, robust-комбинации.
+
+Вход:  results/grid_search/grid_search_results.csv (можно переопределить флагом --results).
+Что делает: строит сводки по рынку и таргету, находит наиболее устойчивые комбинации
+            параметров (top-10% по Sharpe), помечает подозрительные результаты
+            (мало сделок, большая просадка, высокий оборот), выводит отчёт в консоль.
+Результат: results/grid_search/summary_by_market.csv,
+           results/grid_search/summary_by_target.csv,
+           results/grid_search/top_robust_params.csv,
+           results/grid_search/best_by_market.csv,
+           results/grid_search/best_by_target.csv.
+"""
 from __future__ import annotations
 
 import argparse

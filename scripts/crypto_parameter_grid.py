@@ -1,7 +1,18 @@
 """
-Crypto-only staged parameter grid. Writes under results/crypto_parameter_grid/ only.
+Стейджированный грид-сёрч только для крипто-рынка с расширенным набором параметров.
 
-Does not modify results/grid_search/*.
+Вход:  конфиги рынка crypto (configs/crypto.yaml) и сырой архив с ценами.
+Что делает: запускает многоэтапный перебор параметров (train_window, zscore_lookback,
+            pca_explained_variance, universe_selection_method, stop_loss_z,
+            max_holding_period и др.) для таргетов BTC, ETH, SOL, XRP, BNB.
+            Каждую строку сохраняет сразу в partial-файл на случай прерывания.
+            Не затрагивает results/grid_search/*.
+Результат: results/crypto_parameter_grid/crypto_parameter_grid_results.csv,
+           results/crypto_parameter_grid/crypto_parameter_grid_failures.csv,
+           results/crypto_parameter_grid/partial_results.csv (промежуточный).
+
+Примечание: экспериментальный скрипт, независимый от основного грид-сёрча.
+            Для анализа его результатов использовать analyze_crypto_parameter_grid.py.
 """
 from __future__ import annotations
 

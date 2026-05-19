@@ -1,3 +1,15 @@
+"""
+Перебор параметров (грид-сёрч) по всем рынкам и таргетам.
+
+Вход:  конфиги рынков (configs/*.yaml) и сырые архивы с ценами.
+Что делает: для каждой комбинации рынок × таргет × rebalance_frequency × (entry_z, exit_z)
+            запускает полный пайплайн и собирает метрики бэктеста.
+            Поддерживает флаги --market, --max-runs, --dry-run.
+Результат: results/grid_search/grid_search_results.csv  — все успешные запуски,
+           results/grid_search/grid_search_failures.csv  — упавшие запуски,
+           results/grid_search/best_by_market.csv        — лучший набор параметров по рынку,
+           results/grid_search/best_by_target.csv        — лучший набор параметров по таргету.
+"""
 from __future__ import annotations
 
 import argparse

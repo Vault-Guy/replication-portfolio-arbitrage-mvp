@@ -1,7 +1,20 @@
 """
-Analyze parameter ranges in recovered grid-search results.
+Детальный анализ диапазонов параметров из результатов грид-сёрча.
 
-Read-only on grid_search_results.csv; writes analysis outputs under results/parameter_analysis/.
+Вход:  results/grid_search/grid_search_results.csv (только чтение).
+Что делает: строит частотные таблицы параметров в топ-5/10/20% по Sharpe,
+            считает медианные метрики по каждому значению rebalance_frequency,
+            entry_z, exit_z и их комбинациям, выявляет наиболее robust-комбинации
+            и подозрительные строки (мало сделок, глубокая просадка, высокий оборот),
+            генерирует Markdown-отчёт.
+Результат: results/parameter_analysis/top10_parameter_frequencies_global.csv,
+           results/parameter_analysis/top10_parameter_frequencies_by_market.csv,
+           results/parameter_analysis/top10_parameter_frequencies_by_target.csv,
+           results/parameter_analysis/parameter_frequencies_all_top_groups_*.csv,
+           results/parameter_analysis/median_performance_by_*.csv,
+           results/parameter_analysis/robust_parameter_combos.csv,
+           results/parameter_analysis/suspicious_top_results.csv,
+           results/parameter_analysis/parameter_analysis_report.md.
 """
 from __future__ import annotations
 

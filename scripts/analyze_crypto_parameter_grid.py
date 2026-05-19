@@ -1,5 +1,20 @@
 """
-Summarize crypto_parameter_grid_results.csv into reports and CSV summaries.
+Анализ результатов стейджированного крипто-грид-сёрча.
+
+Вход:  results/crypto_parameter_grid/crypto_parameter_grid_results.csv
+       (можно переопределить флагом --input).
+Что делает: строит сводки по каждому параметру и стейджу (медианный Sharpe,
+            частота попадания в топ-10%), находит robust-комбинации параметров,
+            сравнивает медианные просадки при наличии/отсутствии риск-контролей
+            (stop_loss_z, max_holding_period), помечает подозрительные строки,
+            генерирует Markdown-отчёт.
+Результат: results/crypto_parameter_grid/crypto_parameter_summary_by_stage.csv,
+           results/crypto_parameter_grid/crypto_parameter_summary_by_target.csv,
+           results/crypto_parameter_grid/crypto_best_by_target.csv,
+           results/crypto_parameter_grid/crypto_best_by_stage.csv,
+           results/crypto_parameter_grid/crypto_robust_parameter_zones.csv,
+           results/crypto_parameter_grid/crypto_suspicious_results.csv,
+           results/crypto_parameter_grid/crypto_parameter_analysis_report.md.
 """
 from __future__ import annotations
 
