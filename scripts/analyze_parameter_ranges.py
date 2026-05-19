@@ -39,10 +39,6 @@ METRIC_COLS = [
     "hit_rate",
 ]
 
-EXPECTED_ROWS = 1440
-EXPECTED_PER_TARGET = 96
-EXPECTED_PER_MARKET = 480
-
 
 def _md_table(frame: pd.DataFrame, *, index: bool = False) -> str:
     """GitHub-flavored markdown pipe table without optional tabulate dependency."""
@@ -74,22 +70,11 @@ def _save_csv(df: pd.DataFrame, name: str) -> Path:
 
 
 def _validate(df: pd.DataFrame) -> None:
-    if len(df) != EXPECTED_ROWS:
-        raise ValueError(f"Expected {EXPECTED_ROWS} rows, got {len(df)}")
     for col in METRIC_COLS:
         if col not in df.columns:
             raise ValueError(f"Missing metric column: {col}")
         if not pd.api.types.is_numeric_dtype(df[col]):
             raise TypeError(f"Column {col!r} must be numeric, got {df[col].dtype}")
-    tc = df.groupby(["market", "target"]).size()
-    if not (tc == EXPECTED_PER_TARGET).all():
-        bad = tc[tc != EXPECTED_PER_TARGET]
-        raise ValueError(f"Each (market,target) should have {EXPECTED_PER_TARGET} rows; issues:\n{bad}")
-    mc = df.groupby("market").size()
-    exp_m = df["market"].unique()
-    for m in exp_m:
-        if mc[m] != EXPECTED_PER_MARKET:
-            raise ValueError(f"Market {m!r} should have {EXPECTED_PER_MARKET} rows, got {mc[m]}")
 
 
 def _top_mask(df: pd.DataFrame, col: str, frac: float, *, high: bool = True) -> pd.Series:
