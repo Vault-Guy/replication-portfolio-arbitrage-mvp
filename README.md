@@ -107,38 +107,15 @@ python scripts/01_smoke_test.py
 
 Запускает полный пайплайн на трёх рынках (USA: CSCO, Crypto: BTC, Russia: авто), результат только в консоли.
 
-### Гридсёрч
+### Запуск расчётов
 
-```bash
-python scripts/02_grid_search.py --dry-run          # просмотр плана
-python scripts/02_grid_search.py --market usa        # только USA
-python scripts/02_grid_search.py --market all        # все рынки
-python scripts/02_grid_search.py --market crypto --max-runs 5  # тест
-```
+Все команды для запуска гридсёрча, анализа и экспорта — в [COMMANDS.md](COMMANDS.md).
 
 **Параметры перебора:** `rebalance_frequency` × `entry_z` × `exit_z` × 5 целевых активов = ~300 комбинаций на рынок.
 
-### Анализ и экспорт
-
-```bash
-python scripts/03_analyze_grid_search.py       # сводные таблицы и топ-параметры
-python scripts/analyze_parameter_ranges.py     # частотный анализ параметров (топ-5/10/20%)
-python scripts/04_export_results_eu.py         # EU-формат для Excel
-```
-
-### Полный цикл (с нуля)
-
-Полная последовательность команд описана в [COMMANDS.md](COMMANDS.md).
-
 ### Визуализация результатов
 
-Основной ноутбук для построения аналитики по итогам расчётов:
-
-```
-notebooks/08_portfolio_growth_report.ipynb
-```
-
-Читает `results/grid_search/best_by_target.csv`, перезапускает пайплайн с лучшими параметрами и строит:
+Основной ноутбук для построения аналитики — `notebooks/08_portfolio_growth_report.ipynb`. Читает `results/grid_search/best_by_target.csv`, перезапускает пайплайн с лучшими параметрами и строит:
 - кривые роста портфеля (стартовый капитал $10 000) по каждому таргету на каждом рынке;
 - сводные таблицы метрик: финальный капитал, общий прирост, Buy & Hold, Sharpe, MDD, % прибыльных сделок;
 - сравнительный график лучшего таргета с каждого рынка (США / Россия / Крипто).
