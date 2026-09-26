@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this software or research project, please cite both authors."
+title: "Replication Portfolio Arbitrage: PCA-Based Statistical Arbitrage Research"
+type: software
+authors:
+  - family-names: "Chekunov"
+    given-names: "Mikhail"
+  - family-names: "Lukianenko"
+    given-names: "Nikita"
+    alias: "Vault-Guy"
+repository-code: "https://github.com/mikhailchekunov/replication-portfolio-arbitrage-mvp"
+version: "0.1.0"
